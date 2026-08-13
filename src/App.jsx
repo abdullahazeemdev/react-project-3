@@ -1,122 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useDeferredValue } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-5">
 
-      <div className="ticks"></div>
+      <div className="w-full max-w-2xl">
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* header */}
+        <div className="mb-8">
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+          <p className="text-blue-500 font-medium mb-2">React Project</p>
+
+          <h1 className="text-4xl font-bold">Taskflow</h1>
+
+          <p className="text-slate-400 mt-2">Manage your daily tasks easily.</p>
+
+        </div>
+
+        {/* add task card */}
+
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-5">
+
+          <div className="flex gap-3">
+            <input type="text" placeholder="What do you need to do?"
+              className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 placeholder:text-slate-500 transition"
+            />
+
+            <button className="bg-blue-600 px-6 rounded-xl font-medium transition hover:bg-blue-800 cursor-pointer">Add task</button>
+          </div>
+
+        </div>
+
+        {/* state */}
+
+         <div className="grid grid-cols-3 gap-4 mb-5">
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p className="text-slate-400 text-sm">
+              Total
+            </p>
+            <h2 className="text-2xl font-bold mt-1">
+              3
+            </h2>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p className="text-slate-400 text-sm">
+              Completed
+            </p>
+            <h2 className="text-2xl font-bold text-green-400 mt-1">
+              1
+            </h2>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <p className="text-slate-400 text-sm">
+              Remaining
+            </p>
+            <h2 className="text-2xl font-bold text-yellow-400 mt-1">
+              2
+            </h2>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+    
+  );
+
+
+};
 
 export default App
