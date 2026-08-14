@@ -1,17 +1,59 @@
-import React from "react";
 import { useState } from "react";
 
-function taskCard({task,onComplete,onDelete}){
-  return (
-    <div>
-      
-    </div>
-    );
-
-}
-
 function App() {
-  return(
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: "Learn React State",
+      category: "React Learning",
+      completed: false,
+    },
+    {
+      id: 2,
+      title: "Understand State Management",
+      category: "React Learning",
+      completed: false,
+    },
+    {
+      id: 3,
+      title: "Practice Event Handling",
+      category: "React Learning",
+      completed: false,
+    }
+  ]);
+
+  const [taskInput, setTaskInput] = useState("");
+  const addTask = () => {
+    if (taskInput.trim() === "") return;
+
+    const newTask = {
+      id: Date.now,
+      title: taskInput,
+      category: "React Learning",
+      completed: false,
+    };
+    setTasks([...tasks, newTask]);
+    setTaskInput("");
+  }
+
+  const completeTask= (id) =>{
+    setTasks(
+      tasks.map((task) =>(
+        task.id === id 
+        ? {...task,  completed : true , category : "completed" }
+        : task
+      ))
+    )
+
+  }
+
+  const deleteTask = (id) => {
+    setTasks(
+      tasks.filter((task) => task.id !== id)
+    )
+  }
+
+  return (
     <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-5">
 
       <div className="w-full max-w-2xl">
@@ -38,10 +80,14 @@ function App() {
             <input
               type="text"
               placeholder="What do you need to do?"
+              value={taskInput}
+              onChange={(e) => setTaskInput(e.target.value)}
               className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-blue-500 placeholder:text-slate-500 "
             />
 
-            <button className="bg-blue-600 hover:bg-blue-700 px-6 rounded-xl font-medium transition cursor-pointer">
+            <button
+              onClick={addTask}
+              className="bg-blue-600 hover:bg-blue-700 px-6 rounded-xl font-medium transition cursor-pointer">
               Add Task
             </button>
           </div>
@@ -56,7 +102,7 @@ function App() {
               Total
             </p>
             <h2 className="text-2xl font-bold mt-1">
-              3
+              {tasks.length}
             </h2>
           </div>
 
@@ -65,7 +111,7 @@ function App() {
               Completed
             </p>
             <h2 className="text-2xl font-bold text-green-400 mt-1">
-              1
+              {tasks.filter((task) => task.completed).length}
             </h2>
           </div>
 
@@ -74,7 +120,7 @@ function App() {
               Remaining
             </p>
             <h2 className="text-2xl font-bold text-yellow-400 mt-1">
-              2
+              {tasks.filter((task) => !task.completed).length}
             </h2>
           </div>
 
@@ -94,91 +140,46 @@ function App() {
           </div>
 
           <div className="space-y-3">
+            {tasks.map((task) => (
+              <div
+              key={task.id}
+               className="flex items-center justify-between gap-4 bg-slate-800 border border-slate-700 rounded-xl p-4 hover:scale-101 transition hover:border-blue-500">
 
-            {/* Task 1 */}
-            <div className="flex items-center justify-between gap-4 bg-slate-800 border border-slate-700 rounded-xl p-4 hover:scale-101 transition hover:border-blue-500">
+                <div className="flex items-center gap-3">
+                  <div className={`w-5 h-5 rounded-full border-2 border-slate-600 ${
+                    task.completed ? "bg-green-500 text-white" : "border-2 border-slate-600"
+                  }`}>
+                  </div>
 
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full border-2 border-slate-600"></div>
+                  <div>
+                    <h3 className="font-medium">
+                      {task.title}
+                    </h3>
 
-                <div>
-                  <h3 className="font-medium">
-                    Learn React State
-                  </h3>
-
-                  <p className="text-xs text-slate-500 mt-1">
-                    React Learning
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="text-green-400 hover:bg-green-400/10 px-3 py-2 rounded-lg cursor-pointer">
-                  Done
-                </button>
-
-                <button className="text-red-400 hover:bg-red-400/10 px-3 py-2 rounded-lg cursor-pointer">
-                  Delete
-                </button>
-              </div>
-
-            </div>
-
-            {/* Task 2 */}
-            <div className="flex items-center justify-between gap-4 bg-slate-800 border border-slate-700 rounded-xl p-4 hover:scale-101 transition hover:border-blue-500">
-
-              <div className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full border-2 border-slate-600"></div>
-
-                <div>
-                  <h3 className="font-medium">
-                    Understand State Management
-                  </h3>
-
-                  <p className="text-xs text-slate-500 mt-1">
-                    React Learning
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="text-green-400 hover:bg-green-400/10 px-3 py-2 rounded-lg cursor-pointer">
-                  Done
-                </button>
-
-                <button className="text-red-400 hover:bg-red-400/10 px-3 py-2 rounded-lg cursor-pointer">
-                  Delete
-                </button>
-              </div>
-
-            </div>
-
-            {/* Completed Task */}
-            <div className="flex items-center justify-between gap-4 bg-slate-800/60 border border-slate-700 rounded-xl p-4 hover:scale-102 transition hover:border-blue-500">
-
-              <div className="flex items-center gap-3">
-
-                <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-xs">
-                  ✓
+                    <p className="text-xs text-slate-500 mt-1">
+                      {task.category}
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <h3 className="font-medium line-through text-slate-500">
-                    Practice Event Handling
-                  </h3>
+                <div className="flex gap-2">
+                  <button
+                  onClick={() => completeTask(task.id)}                  
+                  className="text-green-400 hover:bg-green-400/10 px-3 py-2 rounded-lg cursor-pointer">
+                    Done
+                  </button>
 
-                  <p className="text-xs text-slate-600 mt-1">
-                    Completed
-                  </p>
+                  <button
+                  onClick={() => deleteTask(task.id)}                  
+                  className="text-red-400 hover:bg-red-400/10 px-3 py-2 rounded-lg cursor-pointer">
+                    Delete
+                  </button>
                 </div>
 
               </div>
 
-              <button className="text-red-400 hover:bg-red-400/10 px-3 py-2 rounded-lg cursor-pointer">
-                Delete
-              </button>
+            ))}
 
-            </div>
 
           </div>
 
